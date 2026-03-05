@@ -1,8 +1,8 @@
 import {Router} from 'express'
-const router=Router();
+const eRouter=Router();
 
-router.get("/", (req, res) => {
+eRouter.get("/", (req, res) => {
   res.json({ status: "ok" });
 });
 
-export default router;
+export default eRouter;

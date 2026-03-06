@@ -1,8 +1,9 @@
-POST http://localhost:1234/users
+POST http://localhost:1234/expenses
 Content-Type: application/json
 
 {
-  "username": "Maia.Obando",
-  "email": "maiumai16@gmail.com",
-  "password": "Malvadito1234@"
+  "title": "Pescado",
+  "amount": 200,
+  "category": "Comida",
+  "user_id": 2
 }

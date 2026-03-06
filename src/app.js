@@ -6,7 +6,7 @@ const app = express();
 app.set("json spaces", 2);
 app.use(express.json());
 
-app.use('/health',eRoutes)
+app.use('/expenses',eRoutes)
 
 app.use('/users',uRoutes);
 

@@ -2,7 +2,6 @@ import expenseModel from "../model/expenses.model.js";
 
 async function getAll() {
     const expenses=await expenseModel.getAll()
-    console.log(expenses)
       return expenses.map(e => ({
     titulo: e.titulo,
     precio: e.precio,
@@ -12,6 +11,11 @@ async function getAll() {
       user: e.asociado_a
     }
   }));
+}
+
+async function getExpenseById(id) {
+  const expense=await expenseModel.getExpenseById(id)
+  return expense;
 }
 
 
@@ -44,10 +48,38 @@ async function getExpensesByUser(user_id) {
 return userExpenses;
 }
 
+async function updateExpense(id,updates) {
+  const expense=await expenseModel.getExpenseById(id);
+  const allowedFields = ["title", "amount", "category"];
+  if(!expense){
+    throw new Error("El gasto que ud busca no existe");
+  }
+  if(Object.keys(updates).length === 0){
+  throw new Error("Faltan datos obligatorios");
+  }
+  
+  const filteredUpdates = Object.fromEntries(
+    Object.entries(updates).filter(([key]) =>
+      allowedFields.includes(key)
+    )
+  );
+
+  if(Object.keys(filteredUpdates).length === 0){
+    throw new Error("No hay campos para actualizar");
+  }
+  const updateExpense=await expenseModel.updateExpense(id,filteredUpdates);
+  return updateExpense;
+}
+
+
+
 
 const expenseServices={
     getAll,
     createExpense,
-    getExpensesByUser
+    getExpensesByUser,
+    getExpenseById,
+    updateExpense
+  
 }
 export default expenseServices;

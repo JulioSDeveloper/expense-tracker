@@ -6,4 +6,5 @@ uRouter.get("/",getAll)
 
 uRouter.post("/",createUser)
 
+
 export default uRouter;

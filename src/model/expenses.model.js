@@ -7,6 +7,11 @@ async function getAll(){
     return expenses;
 }
 
+async function getExpensesById(id) {
+    const[userExpenses]=await db.query("SELECT * FROM expenses WHERE id = ?",[id]);
+    return userExpenses;
+}
+
 async function createExpense(title,amount,category,user_id) {
     const [result]=await db.query("INSERT INTO expenses (title,amount,category,user_id) VALUES(?,?,?,?);"
     ,[title,amount,category,user_id]);
@@ -18,6 +23,17 @@ async function getExpensesByUser(user_id) {
     const[userExpenses]=await db.query("SELECT * FROM expenses WHERE user_id = ?",[user_id]);
     console.log(userExpenses)
     return userExpenses;
+}
+
+async function updateExpense(id,filteredUpdates) {
+    const keys=Object.keys(filteredUpdates)
+    const camposDinamicos=keys.map(k=>`${k}=?`).join(", ");
+    const values=[...Object.values(filteredUpdates), id]
+    const query=`UPDATE expenses SET ${camposDinamicos} WHERE id=?`;
+    const [result]=await db.execute(query,values)
+
+    return result;
+
 }
 
 const expenseModel={

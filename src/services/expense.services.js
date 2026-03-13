@@ -19,10 +19,10 @@ async function getExpenseById(id) {
 }
 
 
-async function createExpense(expense) {
-    const {title,amount,category,user_id}=expense;
+async function createExpense(expense,user_id) {
+    const {title,amount,category}=expense;
 
-    if(!title || !amount || !category || !user_id){
+    if(!title || !amount || !category){
     throw new Error("Faltan datos obligatorios");
   }
   if(isNaN(amount)){
@@ -48,11 +48,16 @@ async function getExpensesByUser(user_id) {
 return userExpenses;
 }
 
-async function updateExpense(id,updates) {
+async function updateExpense(id,updates,user_id) {
   const expense=await expenseModel.getExpenseById(id);
   const allowedFields = ["title", "amount", "category"];
+  
   if(!expense){
-    throw new Error("El gasto que ud busca no existe");
+    throw new Error("El gasto que ud busca no existe")
+  }
+
+  if(expense.user_id!==user_id){
+    throw new Error("No autorizado")
   }
   if(Object.keys(updates).length === 0){
   throw new Error("Faltan datos obligatorios");

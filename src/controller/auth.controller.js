@@ -25,10 +25,10 @@ async function registerUser(req,res){
 
 async function logIn(req,res) {
     try {
-    const authUser=await authServices.logIn(req.body);
+    const token=await authServices.logIn(req.body);
     res.status(200).json({
  "success": true,
- "token": "JWT..."
+ "token": token
 })
     } catch (error) {
     res.status(500).json({error:"Error interno"});

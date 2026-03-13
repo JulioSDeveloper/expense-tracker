@@ -1,11 +1,11 @@
 import {Router} from 'express'
+import authMiddleware from '../middleware/auth.middleware.js'
 import eController from '../controller/expense.controller.js'
 const eRouter=Router();
 
-eRouter.get("/",eController.getAll);
-eRouter.get("/user/:id",eController.getExpensesByUser)
-eRouter.get("/:id",eController.getExpenseById)
-eRouter.post("/",eController.createExpense);
-eRouter.patch("/:id",eController.updateExpense)
+eRouter.get("/",authMiddleware.authLogIn,eController.getExpensesByUser)
+eRouter.get("/:id",authMiddleware.authLogIn,eController.getExpenseById)
+eRouter.post("/",authMiddleware.authLogIn,eController.createExpense);
+eRouter.patch("/:id",authMiddleware.authLogIn,eController.updateExpense)
 
 export default eRouter;

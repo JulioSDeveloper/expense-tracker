@@ -13,8 +13,14 @@ async function getAll() {
   }));
 }
 
-async function getExpenseById(id) {
-  const expense=await expenseModel.getExpenseById(id)
+async function getExpenseById(id,user_id) {
+  const expense=await expenseModel.getExpensesById(id)
+  if(!expense){
+    throw new Error("El gasto que ud busca no existe");
+  }
+  if (Number(expense.user_id) !== Number(user_id)) {
+  throw new Error("No autorizado")
+}
   return expense;
 }
 
@@ -44,19 +50,19 @@ async function createExpense(expense,user_id) {
 }
 
 async function getExpensesByUser(user_id) {
-  const userExpenses=await expenseModel.getExpensesByUser(user_id)
-return userExpenses;
+  const userExpensesResult=await expenseModel.getExpensesByUser(user_id)
+  return userExpensesResult;
 }
 
 async function updateExpense(id,updates,user_id) {
-  const expense=await expenseModel.getExpenseById(id);
+  const expense=await expenseModel.getExpensesById(id);
   const allowedFields = ["title", "amount", "category"];
-  
+
   if(!expense){
     throw new Error("El gasto que ud busca no existe")
   }
 
-  if(expense.user_id!==user_id){
+  if(Number(expense.user_id) !== Number(user_id)){
     throw new Error("No autorizado")
   }
   if(Object.keys(updates).length === 0){
@@ -76,6 +82,20 @@ async function updateExpense(id,updates,user_id) {
   return updateExpense;
 }
 
+async function deleteExpense(id,user_id) {
+  const expense=await expenseModel.getExpensesById(id);
+
+  if(!expense){
+    throw new Error("El gasto que desea eliminar no existe")
+  }
+
+  if (Number(expense.user_id) !== Number(user_id)) {
+  throw new Error("No autorizado")
+}
+const deleteExpense=await expenseModel.deleteExpense(id);
+
+return deleteExpense;
+}
 
 
 
@@ -84,7 +104,8 @@ const expenseServices={
     createExpense,
     getExpensesByUser,
     getExpenseById,
-    updateExpense
+    updateExpense,
+    deleteExpense
   
 }
 export default expenseServices;

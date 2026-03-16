@@ -21,8 +21,7 @@ async function createExpense(title,amount,category,user_id) {
 
 async function getExpensesByUser(user_id) {
     const[userExpenses]=await db.query("SELECT * FROM expenses WHERE user_id = ?",[user_id]);
-    console.log(userExpenses)
-    return userExpenses;
+    return userExpenses[0];
 }
 
 async function updateExpense(id,filteredUpdates) {
@@ -36,9 +35,17 @@ async function updateExpense(id,filteredUpdates) {
 
 }
 
+async function deleteExpense(id) {
+    const [deleteExpense]=await db.query("DELETE FROM EXPENSES WHERE id = ? ",[id]);
+    return deleteExpense[0]
+}
+
 const expenseModel={
     getAll,
     createExpense,
-    getExpensesByUser
+    getExpensesByUser,
+    getExpensesById,
+    updateExpense,
+    deleteExpense
 }
 export default expenseModel;

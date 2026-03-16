@@ -1,9 +1,5 @@
-POST http://localhost:1234/expenses
-Content-Type: application/json
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjQsInVzZXJuYW1lIjoianVsaW8iLCJpYXQiOjE3NzM0NDM2MzUsImV4cCI6MTc3MzQ0NzIzNSwiaXNzIjoiYXBwIn0.Vk29Cd8NXEdxWyoQz4dwGVIt-ZmGU15ScUZpKWLmDq0
+GET http://localhost:1234/expenses/
+Authorization: Bearer {{token}}
 
-{
-  "title": "Pescado",
-  "amount": 200,
-  "category": "Comida",
-  "user_id": 2
-}
+

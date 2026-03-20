@@ -1,0 +1,84 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+margin: 0;
+height: 100vh;
+display: flex;
+justify-content: center;
+background-color: #0f0f1a;
+color: white;
+font-family: sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;   /* ancho tipo app */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;          /* separación */
+  padding: 20px;
+}
+.form-card{
+  background-color: #1e1e2f;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.form-card.hide {
+  opacity: 0;
+  transform: translateY(-10px);
+  max-height: 0;
+  padding: 0;
+}
+
+.form-card.show {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 500px; /* suficiente para el form */
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+input, select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4f46e5;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #4338ca;
+}
+.expense-item {
+  background-color: #1e1e2f;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.expense-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -31,6 +31,7 @@ async function logIn(req,res) {
  "token": token
 })
     } catch (error) {
+        console.log(error)
     res.status(500).json({error:"Error interno"});
     }
 }

@@ -21,7 +21,7 @@ async function createExpense(title,amount,category,user_id) {
 
 async function getExpensesByUser(user_id) {
     const[userExpenses]=await db.query("SELECT * FROM expenses WHERE user_id = ?",[user_id]);
-    return userExpenses[0];
+    return userExpenses;
 }
 
 async function updateExpense(id,filteredUpdates) {

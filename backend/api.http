@@ -1,5 +1,7 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjQsInVzZXJuYW1lIjoianVsaW8iLCJpYXQiOjE3NzM0NDM2MzUsImV4cCI6MTc3MzQ0NzIzNSwiaXNzIjoiYXBwIn0.Vk29Cd8NXEdxWyoQz4dwGVIt-ZmGU15ScUZpKWLmDq0
-GET http://localhost:1234/expenses/
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjYsInVzZXJuYW1lIjoiRGVhbi4xMyIsImlhdCI6MTc3NDkxMjAxNywiZXhwIjoxNzc0OTE1NjE3LCJpc3MiOiJhcHAifQ.ffm1EkWsaK3FqurI56F_j1iDysbgKd3Dnq_wTOaB2sw
+DELETE http://localhost:1234/expenses/13
 Authorization: Bearer {{token}}
+Content-Type: application/json
+
 
 

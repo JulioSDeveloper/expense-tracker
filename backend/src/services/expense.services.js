@@ -26,7 +26,7 @@ async function getExpenseById(id,user_id) {
 
 
 async function createExpense(expense,user_id) {
-    const {title,amount,category}=expense;
+    const {title,amount,category,created_at}=expense;
 
     if(!title || !amount || !category){
     throw new Error("Faltan datos obligatorios");
@@ -40,13 +40,8 @@ async function createExpense(expense,user_id) {
     category,
     user_id
   );
-  return {
-  id:newExpenseId,
-  title,
-  amount,
-  category,
-  user_id
-}
+  const result=await expenseModel.getExpensesById(newExpenseId);
+  return result[0];
 }
 
 async function getExpensesByUser(user_id) {
@@ -82,19 +77,21 @@ async function updateExpense(id,updates,user_id) {
   return updateExpense;
 }
 
-async function deleteExpense(id,user_id) {
-  const expense=await expenseModel.getExpensesById(id);
+async function deleteExpense(id, user_id) {
+  const result = await expenseModel.getExpensesById(id);
+  const expense = result[0];
 
-  if(!expense){
-    throw new Error("El gasto que desea eliminar no existe")
+  if (!expense) {
+    throw new Error("El gasto que desea eliminar no existe");
   }
 
   if (Number(expense.user_id) !== Number(user_id)) {
-  throw new Error("No autorizado")
-}
-const deleteExpense=await expenseModel.deleteExpense(id);
+    throw new Error("No autorizado");
+  }
 
-return deleteExpense;
+  const deleted = await expenseModel.deleteExpense(id);
+
+  return deleted;
 }
 
 

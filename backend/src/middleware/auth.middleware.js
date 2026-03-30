@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 function authLogIn(req,res,next) {
+    console.log(req.user)
     const header=req.headers.authorization
     if(!header){
     res.status(401).json({error:"Unauthorized"})

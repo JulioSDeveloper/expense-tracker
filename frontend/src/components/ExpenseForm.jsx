@@ -2,28 +2,51 @@ import { useState } from "react";
 
 export function ExpenseForm({ agregarGasto }) {
 
-  const [titulo, setTitulo] = useState("");
-  const [monto, setMonto] = useState("");
-  const [tipo, setTipo] = useState("");
-  const [fecha, setFecha] = useState("");
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
 
     const nuevoGasto = {
-      titulo,
-      monto,
-      tipo,
-      fecha
+      title,
+      amount:Number(amount),
+      category,
     };
 
-    agregarGasto(nuevoGasto);
+  if(title.trim()==="" || title===" ")return
+  if(!amount || amount <=0 || isNaN(Number(amount)))return
+  if(category==="")return
 
-    // limpiar inputs
-    setTitulo("");
-    setMonto("");
-    setTipo("");
-    setFecha("");
+   fetch('http://localhost:1234/expenses', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(nuevoGasto)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error al crear gasto');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data)
+    agregarGasto(data)
+     // limpiar inputs
+    setTitle("");
+    setAmount("");
+    setCategory("");
+  })
+  .catch(error => {
+    console.error(error);
+  });
+  
+
+   
   }
 
   return (
@@ -31,34 +54,29 @@ export function ExpenseForm({ agregarGasto }) {
       <input
         type="text"
         placeholder="Concepto"
-        value={titulo}
-        onChange={(e) => setTitulo(e.target.value)}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
 
       <input
         type="number"
         placeholder="Monto"
-        value={monto}
-        onChange={(e) => setMonto(e.target.value)}
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
       />
 
       <select
-        value={tipo}
-        onChange={(e) => setTipo(e.target.value)}
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
       >
-        <option value="">--Selecciona--</option>
+        <option value="" disabled hidden>Selecciona una opción</option>
         <option value="comida">Comida</option>
         <option value="ropa">Ropa</option>
+        <option value="hogar">Hogar</option>
+        <option value="bienestar">Bienestar</option>
+        <option value="entretenimiento">Entretenimiento</option>
         <option value="otros">Otros</option>
       </select>
-       <input
-        type="text"
-        placeholder="fecha"
-        value={fecha}
-        onChange={(e) => setFecha(e.target.value)}
-      />
-
-
       <button type="submit">Crear</button>
     </form>
   );

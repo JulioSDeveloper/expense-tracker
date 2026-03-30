@@ -82,3 +82,42 @@ button:hover {
   justify-content: space-between;
   align-items: center;
 }
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  margin-top: 80px;
+  background-color: #1e1e2f;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-container input {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.login-container button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4f46e5;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.login-container button:hover {
+  background-color: #4338ca;
+}

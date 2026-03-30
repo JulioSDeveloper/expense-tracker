@@ -1,15 +1,17 @@
 import { ExpenseItem } from "./ExpenseItem"
 
-export function ExpenseList({items}){
+export function ExpenseList({items,eliminarItem}){
 
 return <> 
     <div className="item-container">
-     {items.map((item,index)=>{
+     {items.map((item)=>{
         return <ExpenseItem 
-  key={index}
-  titulo={item.titulo}
-  monto={item.monto}
-  fecha={item.fecha}
+  key={item.id}
+  id={item.id}
+  title={item.title}
+  amount={item.amount}
+  created_at={item.created_at}
+  eliminarItem={eliminarItem}
 />
      })}
     

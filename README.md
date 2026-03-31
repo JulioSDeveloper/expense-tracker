@@ -1,112 +1,124 @@
-# Expense Tracker API
+# 💸 Expense Tracker App
 
-REST API for personal expense management built with **Node.js**, **Express**, and **MySQL**.
+Aplicación **fullstack** para la gestión de gastos personales, desarrollada con **Node.js, Express, MySQL y React**.
 
-This project allows users to **register, authenticate, and manage their personal expenses securely** using **JWT authentication**.
-
----
-
-# Features
-
-* User registration
-* User login with JWT authentication
-* Password hashing with bcrypt
-* Create expenses
-* Get all expenses for authenticated user
-* Get a specific expense
-* Update expenses
-* Delete expenses
-* Expense categorization
-* Authorization: users can only access their own expenses
-* Global error handling middleware
-* Request validation using schemas
-* RESTful API architecture
-* Layered architecture (Routes → Controllers → Services → Models)
+Permite a los usuarios **registrarse, autenticarse y gestionar sus gastos** de forma segura utilizando **JWT**.
 
 ---
 
-# Tech Stack
+# 🚀 Features
+
+### 🔐 Autenticación
+
+* Registro de usuarios
+* Login con JWT
+* Password hashing con bcrypt
+* Rutas protegidas
+
+### 💸 Gestión de gastos
+
+* Crear gastos
+* Obtener gastos del usuario autenticado
+* Obtener un gasto específico
+* Actualizar gastos
+* Eliminar gastos
+* Categorización de gastos
+
+### 🧠 Backend
+
+* Arquitectura en capas (Routes → Controllers → Services → Models)
+* Middleware global de manejo de errores
+* Validación de requests con Zod
+* Autorización: cada usuario solo accede a sus datos
+
+### 🎨 Frontend
+
+* Login con persistencia de token (localStorage)
+* Listado dinámico de gastos
+* Creación de gastos en tiempo real
+* Eliminación sin recargar la página
+* Manejo de estado con React Hooks
+
+---
+
+# 🧰 Tech Stack
+
+### Backend
 
 * Node.js
 * Express
 * MySQL
 * JWT (jsonwebtoken)
 * bcrypt
-* Zod (schema validation)
+* Zod
+
+### Frontend
+
+* React
+* Fetch API
+* CSS
 
 ---
 
-# Project Structure
+# 📁 Project Structure
 
 ```
-src
-├── config
-│   └── db.js
+expense-tracker
+├── backend
+│   └── src
+│       ├── config
+│       ├── controller
+│       ├── middleware
+│       ├── model
+│       ├── routes
+│       ├── schemas
+│       ├── services
+│       └── app.js
 │
-├── controller
-│   ├── auth.controller.js
-│   ├── expense.controller.js
-│   └── user.controller.js
-│
-├── middleware
-│   ├── auth.middleware.js
-│   ├── error.middleware.js
-│   └── validate.middleware.js
-│
-├── model
-│   ├── auth.model.js
-│   ├── expenses.model.js
-│   └── user.model.js
-│
-├── routes
-│   ├── auth.routes.js
-│   ├── expense.routes.js
-│   └── user.routes.js
-│
-├── schemas
-│   └── expense.schema.js
-│
-├── services
-│   ├── auth.services.js
-│   ├── expense.services.js
-│   └── user.services.js
-│
-├── utils
-│
-└── app.js
+├── frontend
+│   ├── components
+│   ├── App.jsx
+│   └── main.jsx
 ```
 
 ---
 
-# Installation
+# ⚙️ Installation
 
-Clone the repository:
+## 1. Clonar repositorio
 
-```
-git clone https://github.com/YOUR_USERNAME/expense-tracker.git
-```
-
-Go to the project folder:
-
-```
+```bash
+git clone https://github.com/JulioSDeveloper/expense-tracker.git
 cd expense-tracker
 ```
 
-Install dependencies:
+---
 
-```
+## 🖥️ Backend
+
+```bash
+cd backend
 npm install
+npm run dev
 ```
 
 ---
 
-# Environment Variables
+## 🌐 Frontend
 
-Create a `.env` file in the root directory.
-
-Example:
-
+```bash
+cd frontend
+npm install
+npm run dev
 ```
+
+---
+
+# 🔑 Environment Variables
+
+Crear un archivo `.env` en la carpeta **backend**:
+
+```env
 PORT=1234
 DB_HOST=localhost
 DB_USER=root
@@ -117,51 +129,47 @@ JWT_SECRET=your_secret_key
 
 ---
 
-# Running the Server
+# ▶️ Running the App
 
-Development mode:
-
-```
-npm run dev
-```
-
-Production:
-
-```
-npm start
-```
-
-Server will run on:
+Backend:
 
 ```
 http://localhost:1234
 ```
 
+Frontend (Vite por defecto):
+
+```
+http://localhost:5173
+```
+
 ---
 
-# Authentication
+# 🔐 Authentication
 
-This API uses **JWT tokens** for authentication.
+La API utiliza **JWT tokens**.
 
-After login, the token must be included in the request headers:
+Después del login, el token debe enviarse en los headers:
 
 ```
 Authorization: Bearer YOUR_TOKEN
 ```
 
+El frontend gestiona automáticamente el token usando **localStorage**.
+
 ---
 
-# API Endpoints
+# 📡 API Endpoints
 
-## Authentication
+## 🔐 Auth
 
-Login
+### Login
 
 ```
 POST /auth/login
 ```
 
-Example body:
+Body:
 
 ```
 {
@@ -172,15 +180,15 @@ Example body:
 
 ---
 
-## Users
+## 👤 Users
 
-Register a new user
+### Register
 
 ```
 POST /users
 ```
 
-Get users
+### Get users
 
 ```
 GET /users
@@ -188,29 +196,27 @@ GET /users
 
 ---
 
-## Expenses (Protected Routes)
+## 💸 Expenses (Protected Routes)
 
-All expense routes require authentication.
-
-Get all expenses for the authenticated user
+### Get all expenses (user)
 
 ```
 GET /expenses
 ```
 
-Get a specific expense
+### Get one expense
 
 ```
 GET /expenses/:id
 ```
 
-Create an expense
+### Create expense
 
 ```
 POST /expenses
 ```
 
-Example body:
+Body:
 
 ```
 {
@@ -220,13 +226,15 @@ Example body:
 }
 ```
 
-Update an expense
+---
+
+### Update expense
 
 ```
 PATCH /expenses/:id
 ```
 
-Example body:
+Body:
 
 ```
 {
@@ -234,7 +242,9 @@ Example body:
 }
 ```
 
-Delete an expense
+---
+
+### Delete expense
 
 ```
 DELETE /expenses/:id
@@ -242,28 +252,60 @@ DELETE /expenses/:id
 
 ---
 
-# Security
+# 🔒 Security
 
-* Passwords are hashed using **bcrypt**
-* Authentication handled with **JWT**
-* Protected routes using authentication middleware
-* Users can only access their own expenses
-
----
-
-# Future Improvements
-
-* Pagination for expenses
-* Expense statistics
-* Expense categories table
-* Rate limiting
-* Docker support
-* Unit testing
-* API documentation with Swagger
+* Password hashing con **bcrypt**
+* Autenticación con **JWT**
+* Middleware de protección de rutas
+* Validación de usuario en cada operación
+* Acceso restringido a recursos propios
 
 ---
 
-# Author
+# 📸 Screenshots (pendiente)
+
+Podés agregar:
+
+* Login UI
+* Lista de gastos
+* Formulario de creación
+
+---
+
+# 📌 Project Status
+
+🚧 En desarrollo
+
+### Próximas mejoras:
+
+* ✏️ Editar gastos desde UI
+* 🔄 Estados de carga (loading)
+* ❗ Manejo de errores visual
+* 📊 Estadísticas de gastos
+* 🌐 Deploy (Frontend + Backend)
+* 🐳 Docker
+* 📄 Documentación con Swagger
+
+---
+
+# 🧠 Learnings
+
+* Integración completa frontend-backend
+* Manejo de autenticación con JWT
+* CRUD completo con React
+* Arquitectura backend escalable
+* Manejo de estado en aplicaciones reales
+
+---
+
+# 👨‍💻 Author
 
 **Julio Sosa**
-Junior Backend Developer
+Junior Fullstack Developer
+
+---
+
+# ⭐ Notes
+
+Este proyecto fue desarrollado como práctica para consolidar conocimientos en desarrollo web fullstack, integrando backend robusto con un frontend interactivo y autenticado.
+

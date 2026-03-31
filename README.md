@@ -264,11 +264,6 @@ DELETE /expenses/:id
 
 # 📸 Screenshots (pendiente)
 
-Podés agregar:
-
-* Login UI
-* Lista de gastos
-* Formulario de creación
 
 ---
 

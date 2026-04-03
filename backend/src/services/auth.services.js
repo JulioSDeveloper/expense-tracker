@@ -32,7 +32,7 @@ async function registerUser(user) {
 }
 
 async function logIn(user) {
-    const {email,password}=user;
+    const {username,email,password}=user;
     const existingUser = await authModel.findByEmail(email);
 
     if(!existingUser){
@@ -59,7 +59,14 @@ async function logIn(user) {
 };
   const token=jwt.sign(payload,secret,options);
 
-  return token;
+  return {
+    "token":token,
+    "user":{
+      "username":existingUser.username,
+      "email":existingUser.email
+    }
+
+  };
 }
 
 const authServices={

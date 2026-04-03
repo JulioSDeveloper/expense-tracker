@@ -1,7 +1,12 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjYsInVzZXJuYW1lIjoiRGVhbi4xMyIsImlhdCI6MTc3NDkxMjAxNywiZXhwIjoxNzc0OTE1NjE3LCJpc3MiOiJhcHAifQ.ffm1EkWsaK3FqurI56F_j1iDysbgKd3Dnq_wTOaB2sw
-DELETE http://localhost:1234/expenses/13
-Authorization: Bearer {{token}}
+### REGISTER
+POST http://localhost:1234/auth/register
 Content-Type: application/json
+
+{
+  "username": "julio.prueba",
+  "email": "julio2@test.com",
+  "password": "12345678"
+}
 
 
 

@@ -1,56 +1,72 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export function ExpenseForm({ agregarGasto }) {
+export function ExpenseForm({ agregarGasto, editingExpense, onClose }) {
 
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
 
+  // 🔥 CARGAR DATOS SI ESTÁS EDITANDO
+  useEffect(() => {
+    if (editingExpense) {
+      setTitle(editingExpense.title);
+      setAmount(editingExpense.amount);
+      setCategory(editingExpense.category || "");
+    }
+  }, [editingExpense]);
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    const nuevoGasto = {
+    if (title.trim() === "") return
+    if (!amount || amount <= 0 || isNaN(Number(amount))) return
+    if (category === "") return
+
+    const gasto = {
       title,
-      amount:Number(amount),
+      amount: Number(amount),
       category,
     };
 
-  if(title.trim()==="" || title===" ")return
-  if(!amount || amount <=0 || isNaN(Number(amount)))return
-  if(category==="")return
+    // 🔥 EDITAR
+    if (editingExpense) {
+      fetch(`http://localhost:1234/expenses/${editingExpense.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(gasto)
+      })
+        .then(res => res.json())
+        .then(data => {
+          agregarGasto(data)
+          onClose()
+        })
+        .catch(console.error)
 
-   fetch('http://localhost:1234/expenses', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem("token")}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(nuevoGasto)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Error al crear gasto');
+    } else {
+      // 🔥 CREAR
+      fetch('http://localhost:1234/expenses', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(gasto)
+      })
+        .then(res => res.json())
+        .then(data => {
+          agregarGasto(data)
+          onClose()
+        })
+        .catch(console.error)
     }
-    return response.json();
-  })
-  .then(data => {
-    console.log(data)
-    agregarGasto(data)
-     // limpiar inputs
-    setTitle("");
-    setAmount("");
-    setCategory("");
-  })
-  .catch(error => {
-    console.error(error);
-  });
-  
-
-   
   }
 
   return (
     <form onSubmit={handleSubmit}>
+
       <input
         type="text"
         placeholder="Concepto"
@@ -77,7 +93,11 @@ export function ExpenseForm({ agregarGasto }) {
         <option value="entretenimiento">Entretenimiento</option>
         <option value="otros">Otros</option>
       </select>
-      <button type="submit">Crear</button>
+
+      <button type="submit">
+        {editingExpense ? "Actualizar" : "Crear"}
+      </button>
+
     </form>
   );
 }

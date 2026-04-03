@@ -36,8 +36,9 @@ Permite a los usuarios **registrarse, autenticarse y gestionar sus gastos** de f
 * Login con persistencia de token (localStorage)
 * Listado dinámico de gastos
 * Creación de gastos en tiempo real
+* Edición de gastos sin recargar la página
 * Eliminación sin recargar la página
-* Manejo de estado con React Hooks
+* Manejo de estado con React Hooks (`useState`, `useEffect`)
 
 ---
 
@@ -273,7 +274,6 @@ DELETE /expenses/:id
 
 ### Próximas mejoras:
 
-* ✏️ Editar gastos desde UI
 * 🔄 Estados de carga (loading)
 * ❗ Manejo de errores visual
 * 📊 Estadísticas de gastos
